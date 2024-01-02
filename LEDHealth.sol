@@ -19,7 +19,7 @@ contract LEDHealth is ERC20, ERC20Permit {
     event Unstaked(address indexed user, uint256 amount, uint256 timestamp);
 
     constructor() ERC20("LED Token", "LED") ERC20Permit("LED Token") {
-        _mint(msg.sender, 1000000000000 * 10**decimals()); // Mint initial tokens for the contract deployer
+        _mint(msg.sender, 1000000000000 * 18**decimals()); // Mint initial tokens for the contract deployer
         welcomeMessage = "Greetings LED Token Users!";
         _decimals = 18; // Set the number of decimals for the token
     }
@@ -38,7 +38,7 @@ contract LEDHealth is ERC20, ERC20Permit {
 
         // For every 5000 steps, reward the user with 100 LED Tokens
         uint256 tokensEarned = (_steps / 5000) * 10;
-        _mint(msg.sender, tokensEarned * 10**_decimals);
+        _mint(msg.sender, tokensEarned * 18**_decimals);
     }
 
     // Function to record lengths swam by the user
@@ -47,7 +47,7 @@ contract LEDHealth is ERC20, ERC20Permit {
 
         // For every 10 lengths, reward the user with 100 LED Tokens
         uint256 tokensEarned = (_lengths / 10) * 10;
-        _mint(msg.sender, tokensEarned * 10**_decimals);
+        _mint(msg.sender, tokensEarned * 18**_decimals);
     }
 
     // Function to track calorie burn, since it involves fitness
@@ -56,17 +56,17 @@ contract LEDHealth is ERC20, ERC20Permit {
 
         // For every 100 calories burnt, reward the user with 50 LED Tokens
         uint256 tokensEarned = (_calories / 100) * 10;
-        _mint(msg.sender, tokensEarned * 10**_decimals);
+        _mint(msg.sender, tokensEarned * 18**_decimals);
     }
 
     // Function to reward users for reaching specific milestones or achievements
     function unlockAchievement(string memory _achievement, uint256 _rewardTokens) public {
         require(!unlockedAchievements[msg.sender][_achievement], "Achievement already unlocked");
-
+        
         unlockedAchievements[msg.sender][_achievement] = true;
-        _mint(msg.sender, _rewardTokens * 10**_decimals);
+        _mint(msg.sender, _rewardTokens * 18**_decimals);
     }
-
+    
     // Function to allow users to stake LED tokens
     function stake(uint256 amount) public {
         require(amount > 0, "Must stake a non-zero amount");
